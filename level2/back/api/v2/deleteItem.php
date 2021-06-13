@@ -18,7 +18,7 @@ $pdo = connection();
 $isItemDeleted = false;
 
 /* The query of an item deleting from the DB if the item exists */
-if (isItemExist($pdo, $id)) {
+if (isEntityExist($pdo, $id)) {
     $stm = $pdo->prepare('DELETE  from items WHERE id = :id');
     $stm->execute([':id' => $id]);
     $isItemDeleted = isDBChanged($stm);

@@ -17,7 +17,7 @@ $data = getInputData();
 $isItemChanged = false;
 
 /* The query of an item updating in the DB */
-if (isItemExist($pdo, $id)) {
+if (isEntityExist($pdo, $id)) {
     $stm = $pdo->prepare('UPDATE `items` 
                                SET text = :text, checked = :checked
                                WHERE id = :id'
