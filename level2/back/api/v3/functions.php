@@ -3,6 +3,8 @@
 require_once __DIR__ . '/headers.php';
 require_once __DIR__ . '/constants.php';
 
+//------------------- input data processing functions -------------------------//
+
 /**
  * Gets data from input stream
  *
@@ -13,6 +15,23 @@ function getInputData(): array
     $input = json_decode(file_get_contents(PHP_INPUT), true);
     return sanitizeData($input);
 }
+
+/**
+ * Removes illegal symbols from user's input array
+ *
+ * @param array $data User's data array
+ * @return array      Sanitized data array
+ */
+function sanitizeData(array $data): array
+{
+    $outputArray = [];
+    foreach ($data as $name => $value) {
+        $outputArray[$name] = filter_var(trim($value), FILTER_SANITIZE_STRING);
+    }
+    return $outputArray;
+}
+
+//------------------- DB structure/configuration functions -------------------------//
 
 /**
  * Gets options for connections to DB
@@ -57,35 +76,7 @@ function createUsersTable(PDO $pdo)
     $pdo->exec($query);
 }
 
-/**
- * Gets items only for the specified user
- *
- * @param $pdo    PDO connection instance
- * @param $user 'User' name
- * @return        array
- */
-function getItemsByUser(PDO $pdo, string $user): array
-{
-    $stm = $pdo->prepare('SELECT * from items WHERE user = :user');
-    $stm->execute(['user' => $user]);
-    return $stm->fetchAll(PDO::FETCH_ASSOC);
-}
-
-/**
- * Checks if the specified entry (field value) exists in the DB
- *
- * @param $pdo    PDO connection instance
- * @param $value
- * @param $entityTitle
- * @param $entityTable
- * @return bool   true if exists, false otherwise
- */
-function isEntityExist(PDO $pdo, string $value, string $entityTitle, string $entityTable): bool
-{
-    $stm = $pdo->prepare('SELECT * FROM ' . $entityTable . ' WHERE ' . $entityTitle . ' = :value');
-    $stm->execute([':value' => $value]);
-    return $stm->rowCount() > 0;
-}
+//------------------- user-entity functions -------------------------//
 
 /**
  * Checks if a user is logged in the current session
@@ -120,21 +111,6 @@ function isUserVerified(PDO $pdo, string $login, string $password): bool
 }
 
 /**
- * Removes illegal symbols from user's input array
- *
- * @param array $data User's data array
- * @return array      Sanitized data array
- */
-function sanitizeData(array $data): array
-{
-    $outputArray = [];
-    foreach ($data as $name => $value) {
-        $outputArray[$name] = filter_var(trim($value), FILTER_SANITIZE_STRING);
-    }
-    return $outputArray;
-}
-
-/**
  * Adds a new user to users DB table
  *
  * @param $pdo       PDO connection instance
@@ -150,6 +126,8 @@ function saveUser(PDO $pdo, string $login, string $password): void
     );
     $stm->execute([':login' => $login, ':password' => password_hash($password, PASSWORD_DEFAULT)]);
 }
+
+//------------------- item-entity functions -------------------------//
 
 /**
  * Adds a new item to items DB table
@@ -195,5 +173,37 @@ function changeItem(PDO $pdo, array $data)
                                WHERE id = :id'
     );
     $stm->execute(['text' => $data['text'], 'checked' => (int)$data['checked'], 'id' => $data['id']]);
+    return $stm->rowCount() > 0;
+}
+
+//------------------- other functions -------------------------//
+
+/**
+ * Gets items only for the specified user
+ *
+ * @param $pdo    PDO connection instance
+ * @param $user 'User' name
+ * @return        array
+ */
+function getItemsByUser(PDO $pdo, string $user): array
+{
+    $stm = $pdo->prepare('SELECT * from items WHERE user = :user');
+    $stm->execute(['user' => $user]);
+    return $stm->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Checks if the specified entry (field value) exists in the DB
+ *
+ * @param $pdo    PDO connection instance
+ * @param $value
+ * @param $entityTitle
+ * @param $entityTable
+ * @return bool   true if exists, false otherwise
+ */
+function isEntityExist(PDO $pdo, string $value, string $entityTitle, string $entityTable): bool
+{
+    $stm = $pdo->prepare('SELECT * FROM ' . $entityTable . ' WHERE ' . $entityTitle . ' = :value');
+    $stm->execute([':value' => $value]);
     return $stm->rowCount() > 0;
 }
