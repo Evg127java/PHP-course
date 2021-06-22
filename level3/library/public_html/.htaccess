@@ -1,0 +1,9 @@
+RewriteEngine On
+
+#reroute condition: if not a directory
+RewriteCond %{SCRIPT_FILENAME} !-d
+
+#reroute condition: if not a file
+RewriteCond %{SCRIPT_FILENAME} !-f
+
+RewriteRule .* ./index.php [QSA,L]
