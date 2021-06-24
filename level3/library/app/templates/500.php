@@ -1,0 +1,1 @@
+<h3>DB error: <?= $error ?? '' ?></h3>
