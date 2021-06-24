@@ -2,7 +2,6 @@
 
 namespace app\controllers;
 
-
 use app\Exceptions\NotFoundException;
 use app\models\Book;
 use app\services\Paginator;
@@ -56,4 +55,38 @@ class BooksController extends Controller
         exit();
     }
 
+    /**
+     * Searches a book in DB by specified value string(title is expected)
+     *
+     * @param $searchString
+     */
+    function search(string $searchString): void
+    {
+        /* Get cleaned string to search */
+        $string = (trim(urldecode($searchString)));
+        $books = Book::getByTitle(filter_var($string, FILTER_SANITIZE_STRING));
+
+        $this->view->renderHtml('books-page.php', ['books' => $books, 'searchString' => $string, 'title' => 'shpp-library: search result']);
+        exit();
+    }
+
+    /**
+     * Counts clicks for the specified book's
+     *
+     * @param int $id             books's id
+     * @throws NotFoundException  throw NotFoundException if id is not correct
+     */
+    function click(int $id): void
+    {
+        $book = Book::getbyId($id);
+
+        if ($book === null) {
+            throw new NotFoundException('ERROR_404. Wrong ID');
+        }
+
+        $book->updateClicks();
+        /* Message to the front as the  response to click */
+        echo 'We\'ll take in account your desire to read the book: "' . $book->title . '"';
+        exit();
+    }
 }
