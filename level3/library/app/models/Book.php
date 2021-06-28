@@ -132,7 +132,7 @@ class Book
     /**
      * Set book's delete time
      */
-    public function setBookDeletedTime(): Book
+    public function setDeletedTime(): Book
     {
         $db = Db::getInstance();
         /* Get current data in the proper format to save in DB */
@@ -148,7 +148,7 @@ class Book
     /**
      * Marks a book as deleted
      */
-    public function markBookAsDeleted(): Book
+    public function markAsDeleted(): Book
     {
         $db = Db::getInstance();
         /* Set is_deleted attribute */
@@ -193,7 +193,7 @@ class Book
         $bookId = self::getMaxId($db, 'books') + 1;
 
         /* Try to upload image file */
-        $imgName = self::bookImageFileUpload($file, $bookId);
+        $imgName = self::fileUpload($file, $bookId);
 
         if ($imgName == null) {
             $uploadedFileName = self::DEFAULT_IMG;
@@ -258,7 +258,7 @@ class Book
      * @param int $bookId   relative book's id
      * @return string|null  uploaded image file name or null
      */
-    private static function bookImageFileUpload(array $file, int $bookId): ?string
+    private static function fileUpload(array $file, int $bookId): ?string
     {
         if ($file['error'] != 0) {
             return null;
@@ -285,7 +285,7 @@ class Book
      * @param $array  'Input data array
      * @return array   Authors array
      */
-    private static function getBookAuthorsFromInput(array $array): array
+    private static function getAuthorsFromInput(array $array): array
     {
         $authors = [];
         foreach ($array as $item => $value) {
