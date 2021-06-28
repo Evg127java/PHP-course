@@ -2,7 +2,7 @@
 
 namespace app\core;
 
-use app\Exceptions\NotFoundException;
+use app\exceptions\NotFoundException;
 
 const ROUTES = '/../core/routes.php';
 /**
