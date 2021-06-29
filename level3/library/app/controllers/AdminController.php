@@ -30,7 +30,9 @@ class AdminController extends Controller
         if (!$isUserAuthenticated) {
             header('WWW-Authenticate: Basic realm="My Realm"');
             header('HTTP/1.0 401 Unauthorized');
-            echo 'You are not authenticated!';
+
+            /* The content which a user will see after press the "cancel" button */
+            echo 'You are not authenticated!<br><a href="/">Home page</a>';
             exit();
         }
 
