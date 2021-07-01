@@ -18,7 +18,7 @@ use app\services\Flasher;
 <body>
 <div class="container-fluid my-4">
     <nav class="navbar navbar-light bg-light justify-content-between">
-        <div class="navbar-brand"><a href="http://library" class="navbar-brand"><strong>Ш++</strong></a> LIBRARY ADMIN PANEL</div>
+        <div class="navbar-brand"><a href="/" class="navbar-brand"><strong>Ш++</strong></a> LIBRARY ADMIN PANEL</div>
         <form class="form-inline">
             <a href="http://logout:logout@<?= $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'] ?>">
                 <button type="button" class="btn btn-outline-secondary my-2 my-sm-0">Sign out</button>
@@ -46,7 +46,7 @@ use app\services\Flasher;
                         <?php if (!empty($books)):
                             foreach ($books as $book): ?>
                                 <tr >
-                                    <td><a href="http://library/book/<?= $book->id?>"><?= $book->title?></a></td>
+                                    <td><a href="/book/<?= $book->id?>"><?= $book->title?></a></td>
                                     <td><?= $book->author?></td>
                                     <td><?= $book->year?></td>
                                     <td><a href="/admin/delete/<?=$book->id?>">Delete</a></td>

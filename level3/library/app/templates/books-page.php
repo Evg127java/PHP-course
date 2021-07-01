@@ -40,13 +40,13 @@
                 foreach ($books as $book): ?>
                     <div data-book-id="<?= $book->id?>" class="book_item col-xs-6 col-sm-3 col-md-2 col-lg-2">
                         <div class="book">
-                            <a href="http://library/book/<?= $book->id?>"><img src="/images/<?= $book->img?>" alt="<?= $book->title?>">
+                            <a href="/book/<?= $book->id?>"><img src="/images/<?= $book->img?>" alt="<?= $book->title?>">
                                 <div data-title="<?= $book->title?>" class="blockI" style="height: 46px;">
                                     <div data-book-title="<?= $book->title?>" class="title size_text"><?= $book->title?></div>
                                     <div data-book-author="<?= $book->author?>" class="author"><?= $book->author?></div>
                                 </div>
                             </a>
-                            <a href="http://library/book/<?= $book->id?>">
+                            <a href="/book/<?= $book->id?>">
                                 <button type="button" class="details btn btn-success">Читать</button>
                             </a>
                         </div>
@@ -62,7 +62,7 @@
                 <?php if (!empty($paginator['hasPrevious']) && $paginator['hasPrevious']): ?>
                     <li class="page-item active">
                         <a class="page-link"
-                           href="http://library/<?= $paginator['currentPage'] - 1; ?>" tabindex="-1">Previous</a>
+                           href="/<?= $paginator['currentPage'] - 1; ?>" tabindex="-1">Previous</a>
                     </li>
                 <?php endif ?>
                 <?php if (!empty($paginator['currentPage'])): ?>
@@ -73,7 +73,7 @@
                 <?php if (!empty($paginator['hasNext']) && $paginator['hasNext']) : ?>
                     <li class="page-item active">
                         <a class="page-link"
-                           href="http://library/<?= $paginator['currentPage'] + 1; ?>">Next</a>
+                           href="/<?= $paginator['currentPage'] + 1; ?>">Next</a>
                     </li>
                 <?php endif ?>
             </ul>

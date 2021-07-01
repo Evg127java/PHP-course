@@ -3,7 +3,7 @@
     <nav class="navbar navbar-default">
         <div class="container">
             <div class="col-xs-5 col-sm-2 col-md-2 col-lg-2">
-                <div class="logo"><a href="http://library" class="navbar-brand"><span class="sh">Ш</span><span
+                <div class="logo"><a href="/" class="navbar-brand"><span class="sh">Ш</span><span
                             class="plus">++</span></a></div>
             </div>
             <div class="col-xs-12 col-sm-7 col-md-8 col-lg-8">
@@ -36,7 +36,7 @@
                             class="fa-stack fa-sm"><i class="fa fa-facebook fa-stack-1x"></i></span></a>
                     <a href="http://programming.kr.ua/ru/courses#faq" target="_blank"><span class="fa-stack fa-sm"><i
                                 class="fa fa-book fa-stack-1x"></i></span></a>
-                    <a href="http://library/admin/" type="button" class="page-link">Admin</a>
+                    <a href="/admin/" type="button" class="page-link">Admin</a>
                 </div>
             </div>
         </div>

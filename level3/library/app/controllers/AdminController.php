@@ -28,7 +28,7 @@ class AdminController extends Controller
     {
         $isUserAuthenticated = $this->checkAuth();
         if (!$isUserAuthenticated) {
-            header('WWW-Authenticate: Basic realm="My Realm"');
+            header('WWW-Authenticate: Basic realm="Please login"');
             header('HTTP/1.0 401 Unauthorized');
 
             /* The content which a user will see after press the "cancel" button */
