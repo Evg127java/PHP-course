@@ -189,7 +189,12 @@ function getItemsByUser(PDO $pdo, string $user): array
 {
     $stm = $pdo->prepare('SELECT * from items WHERE user = :user');
     $stm->execute(['user' => $user]);
-    return $stm->fetchAll(PDO::FETCH_ASSOC);
+    $items = $stm->fetchAll(PDO::FETCH_ASSOC);
+    array_walk($items, function (&$item) {
+        $checked = $item['checked'];
+        $item['checked'] = $checked === '0' ? false : true;
+    });
+    return $items;
 }
 
 /**
