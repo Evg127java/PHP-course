@@ -7,6 +7,7 @@ session_start();
 require_once __DIR__ . '/dbConnection.php';
 require_once __DIR__ . '/headers.php';
 require_once __DIR__ . '/functions.php';
+checkUserSession();
 
 /* Operate of adding an item if only request method is POST */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

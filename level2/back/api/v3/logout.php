@@ -14,6 +14,4 @@ setcookie('sessionID', '', 0, '/');
 /* Unset session var and destroy */
 unset($_SESSION['user']);
 session_destroy();
-
-$isUserLoggedIn = !isUserLoggedIn();
-echo json_encode(["ok" => $isUserLoggedIn]);
+echo json_encode(["ok" => true]);

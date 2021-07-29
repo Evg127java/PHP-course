@@ -85,7 +85,8 @@ function createUsersTable(PDO $pdo)
  */
 function isUserLoggedIn(): bool
 {
-    return isset($_SESSION['user']);
+    $userCookie = $_COOKIE['sessionID'] ?? '';
+    return $userCookie !== '';
 }
 
 /**
@@ -211,4 +212,13 @@ function isEntityExist(PDO $pdo, string $value, string $entityTitle, string $ent
     $stm = $pdo->prepare('SELECT * FROM ' . $entityTable . ' WHERE ' . $entityTitle . ' = :value');
     $stm->execute([':value' => $value]);
     return $stm->rowCount() > 0;
+}
+
+/**
+ * Checks if user's session is active
+ */
+function checkUserSession() {
+    if (!isUserLoggedIn()) {
+        echo json_encode(['error' => 'Session is out']);
+    }
 }
